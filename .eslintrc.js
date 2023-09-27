@@ -24,7 +24,9 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'vue/no-deprecated-slot-attribute': 'off',
+    'vue/no-deprecated-destroyed-lifecycle': 'off'
   },
   overrides: [
     {
