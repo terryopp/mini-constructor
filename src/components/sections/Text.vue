@@ -3,10 +3,10 @@
     <p v-if="!fit" class="headline mb-4 font-weight-bold grey--text text--darken-3">
       Первая секция
     </p>
-    <v-menu v-else-if="item.icon" v-model="showIconsList" location="center" attach>
+    <v-menu v-else-if="element.icon" v-model="showIconsList" location="center" attach>
       <template #activator="{ on }">
         <v-btn icon text v-on="on">
-          <v-icon color="primary">{{ item.icon }}</v-icon>
+          <v-icon color="primary">{{ element.icon }}</v-icon>
         </v-btn>
       </template>
 
@@ -19,7 +19,7 @@
 
     <div class="text-left">
       <p class="title mb-1 grey--text text--darken-3">Заголовок</p>
-      <p v-if="!isEditingMode">{{ item.title }}</p>
+      <p v-if="!isEditingMode">{{ element.title }}</p>
       <v-text-field
         v-else
         v-model="title"
@@ -29,7 +29,7 @@
         dense
         outlined />
       <p class="title mb-1 grey--text text--darken-3">Контент</p>
-      <p v-if="!isEditingMode">{{ item.content }}</p>
+      <p v-if="!isEditingMode">{{ element.content }}</p>
       <v-textarea
         v-else
         v-model="content"
@@ -47,48 +47,53 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType, nextTick } from 'vue'
+export default {
+  name: 'SectionsText',
+  inheritAttrs: false,
+  customOptions: {}
+}
+</script>
+
+<script lang="ts" setup>
+import { PropType, nextTick, ref, onMounted, defineProps } from 'vue'
 import { TextSection } from '@/common/interfaces'
 
-export default Vue.extend({
-  name: 'TextSection',
-  props: {
-    value: {
-      type: Object as PropType<TextSection>,
-      required: true
-    },
-    fit: {
-      type: Boolean,
-      default: false
-    }
+const iconsList = ['plus', 'minus', 'star', 'account', 'home', 'pen', 'circle']
+
+const props = defineProps({
+  value: {
+    type: Object as PropType<TextSection>,
+    required: true
   },
-  data() {
-    return {
-      item: this.value,
-      title: this.value.title,
-      content: this.value.content,
-      isEditingMode: false,
-      showIconsList: false,
-      iconsList: ['plus', 'minus', 'star', 'account', 'home', 'pen', 'circle']
-    }
-  },
-  mounted() {
-    nextTick(() => {
-      if (this.fit && !this.item.icon) {
-        this.item.icon = 'mdi-plus'
-      }
-    })
-  },
-  methods: {
-    switchEditingMode() {
-      this.isEditingMode = !this.isEditingMode
-      this.item.title = this.title
-      this.item.content = this.content
-    },
-    setIcon(value: string) {
-      this.item.icon = `mdi-${value}`
-      this.showIconsList = false
-    }
+  fit: {
+    type: Boolean,
+    default: false
   }
 })
+
+const element = ref(props.value)
+
+const title = ref(element.value.title)
+const content = ref(element.value.content)
+
+const isEditingMode = ref(false)
+const showIconsList = ref(false)
+
+onMounted(() => {
+  nextTick(() => {
+    if (props.fit && !element.value.icon) {
+      element.value.icon = iconsList[Math.round(Math.random() * iconsList.length - 1)]
+    }
+  })
+})
+
+const switchEditingMode = () => {
+  isEditingMode.value = !isEditingMode.value
+  element.value.title = title.value
+  element.value.content = content.value
+}
+const setIcon = (value: string) => {
+  element.value.icon = `mdi-${value}`
+  showIconsList.value = false
+}
 </script>

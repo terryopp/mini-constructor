@@ -34,15 +34,3 @@ export interface FilmsState {
   topFilms: Film[]
   isSearchingTopFilms: boolean
 }
-
-export type RootFilmsStore = {
-  state: FilmsState
-  mutations: FilmsState
-  getters: {
-    topFilms: Film[]
-  }
-  actions: {
-    fetchTopFilms: () => void
-    fetchFilms: (name: string) => Promise<Film[] | null>
-  }
-}

@@ -6,16 +6,8 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script lang="ts" setup>
 import SectionsField from '@/components/SectionsField.vue'
-
-export default Vue.extend({
-  name: 'App',
-  components: {
-    SectionsField
-  }
-})
 </script>
 
 <style lang="sass">

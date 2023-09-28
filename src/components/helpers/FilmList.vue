@@ -7,40 +7,27 @@
       color="grey lighten-4"
       outlined>
       <img class="film--preview rounded" :src="film.posterUrl" />
-      <v-container class="film--data">
-        <v-row no-gutters>
-          <v-col cols="10">
-            <v-row no-gutters>
-              <v-col>
-                <p class="text-title mb-0">{{ film.nameRu }}</p>
-              </v-col>
-            </v-row>
-            <v-row no-gutters>
-              <v-col>
-                <p class="text-caption">({{ film.nameEn }})</p>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="2">
-            <p class="text-h5 text-right film--data--rating">{{ film.rating }}</p>
-          </v-col>
-        </v-row>
-      </v-container>
+      <div class="d-flex justify-space-between">
+        <div>
+          <p class="text-title film--data--name">{{ film.nameRu }}</p>
+          <p class="text-caption grey--text text--darken-1 film--data--name">({{ film.nameEn }})</p>
+        </div>
+        <p class="text-h5 text-right film--data--rating shrink-0 ml-2">
+          {{ film.rating }}
+        </p>
+      </div>
     </v-card>
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from 'vue'
+<script lang="ts" setup>
+import { PropType, defineProps } from 'vue'
 import { Film } from '@/common/interfaces'
 
-export default Vue.extend({
-  name: 'FilnList',
-  props: {
-    value: {
-      type: Array as PropType<Film[]>,
-      required: true
-    }
+defineProps({
+  value: {
+    type: Array as PropType<Film[]>,
+    required: true
   }
 })
 </script>
@@ -56,7 +43,8 @@ export default Vue.extend({
   &--preview
     width: 100%
   &--data
-    p
+    &--name,
+    &--rating
       margin: 0
     &--rating
       white-space: nowrap
