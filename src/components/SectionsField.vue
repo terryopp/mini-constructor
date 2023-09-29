@@ -1,47 +1,58 @@
 <template>
-  <draggable
-    v-model="sectionsList"
-    draggable=".item"
-    class="d-flex flex-column justify-start pa-4 item-container"
-    animation="300"
-    :disabled="!canDrag"
-    @start="setDragging(true)"
-    @end="setDragging(false)">
-    <v-card v-for="element in sectionsList" :key="element.id" class="item pa-4">
-      <v-btn icon text class="delete-element" @click="deleteSection(element.id)">
-        <v-icon>mdi-delete-outline</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        text
-        class="drag-element"
-        @mouseenter="setCanDrag(true)"
-        @mouseleave="setCanDrag(false)">
-        <v-icon>mdi-drag</v-icon>
-      </v-btn>
-      <TextComponent v-if="element.type === SectionType.Text" :value="element" />
-      <CardsComponent v-if="element.type === SectionType.Cards" :value="element" />
-      <FilmsComponent v-if="element.type === SectionType.Films" :value="element" />
-    </v-card>
-    <v-menu v-model="showNewSlots" location="center" attach>
-      <template #activator="{ on }">
-        <v-btn slot="footer" text color="primary" class="order-last" v-on="on">
-          Добавить секцию
+  <div class="pb-12">
+    <draggable
+      v-model="sectionsList"
+      draggable=".selection-field__container__item"
+      class="d-flex flex-column justify-start pa-4 mx-auto selection-field__container"
+      animation="300"
+      :disabled="!canDrag"
+      @start="setDragging(true)"
+      @end="setDragging(false)">
+      <v-card
+        v-for="element in sectionsList"
+        :key="element.id"
+        class="selection-field__container__item pa-4">
+        <v-btn icon class="delete-element" color="red lighten-1" @click="deleteSection(element.id)">
+          <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
-      </template>
-
-      <v-list>
+        <v-btn
+          icon
+          class="drag-element"
+          color="grey darken-2"
+          @mouseenter="setCanDrag(true)"
+          @mouseleave="setCanDrag(false)">
+          <v-icon>mdi-drag</v-icon>
+        </v-btn>
+        <TextComponent v-if="element.type === SectionType.Text" :value="element" />
+        <CardsComponent v-if="element.type === SectionType.Cards" :value="element" />
+        <FilmsComponent v-if="element.type === SectionType.Films" :value="element" />
+      </v-card>
+    </draggable>
+    <div class="selection-field__add-button secondary">
+      <v-btn
+        v-if="!showNewSlotsButtons"
+        slot="footer"
+        text
+        plain
+        large
+        color="white"
+        width="100%"
+        @click="switchShowNewSlots">
+        Добавить секцию
+      </v-btn>
+      <div v-else class="d-flex justify-center">
         <v-btn
           v-for="newSection in newSectionsType"
           :key="newSection.value"
           text
-          color="primary"
+          x-large
+          color="white"
           @click="addSection(newSection.value)">
           {{ newSection.name }}
         </v-btn>
-      </v-list>
-    </v-menu>
-  </draggable>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -63,7 +74,11 @@ const newSectionsType = [
 
 const saveID = 'savedProject'
 
-const showNewSlots = ref(false)
+const showNewSlotsButtons = ref(false)
+
+const switchShowNewSlots = (value: boolean) => {
+  showNewSlotsButtons.value = value
+}
 
 const isDragging = ref(false)
 const canDrag = ref(false)
@@ -80,6 +95,7 @@ const setDragging = (value: boolean) => {
 const sectionsList: Ref<Section[]> = ref([])
 
 const addSection = (type: SectionType) => {
+  if (showNewSlotsButtons.value) switchShowNewSlots(false)
   sectionsList.value.push(createSection(type))
 }
 const deleteSection = (id: string) => {
@@ -101,10 +117,16 @@ watch(sectionsList, value => localStorage.setItem(saveID, JSON.stringify(value))
 </script>
 
 <style scoped lang="sass">
-.item-container
-  gap: 2em
-  position: relative
-  margin: 0 auto
-  z-index: 2
-  max-width: min(95vw, 1200px)
+.selection-field
+  &__container
+    gap: 2em
+    position: relative
+    max-width: min(95vw, 1200px)
+
+  &__add-button
+    z-index: 3
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100%
 </style>

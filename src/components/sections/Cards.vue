@@ -4,7 +4,7 @@
     <draggable
       v-model="element.components"
       draggable=".item"
-      class="d-flex justify-start flex-wrap item--container"
+      class="d-flex justify-center flex-wrap item__container"
       animation="200"
       :disabled="!canDrag"
       @start="setDragging(true)"
@@ -15,12 +15,16 @@
         class="item pa-2"
         color="grey lighten-4"
         outlined>
-        <v-btn icon text class="delete-element" small @click="deleteElement(textElement.id)">
+        <v-btn
+          icon
+          color="red lighten-2"
+          class="delete-element"
+          small
+          @click="deleteElement(textElement.id)">
           <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
         <v-btn
           icon
-          text
           class="drag-element"
           small
           @mouseenter="setCanDrag(true)"
@@ -30,7 +34,9 @@
         <TextComponent :value="textElement" :fit="true" />
       </v-card>
       <div slot="footer" class="order-last d-flex align-center">
-        <v-btn text color="primary" @click="addTextElement">Добавить карточку</v-btn>
+        <v-btn icon x-large color="primary" class="mx-4" @click="addTextElement">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </div>
     </draggable>
   </div>
@@ -78,6 +84,6 @@ const deleteElement = (id: string) => {
 .item
   height: fit-content
   max-width: 20%
-  &--container
+  &__container
     gap: 0.5em
 </style>

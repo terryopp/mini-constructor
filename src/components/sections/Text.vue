@@ -3,7 +3,12 @@
     <p v-if="!fit" class="headline mb-4 font-weight-bold grey--text text--darken-3">
       Первая секция
     </p>
-    <v-menu v-else-if="element.icon" v-model="showIconsList" location="center" attach>
+    <v-menu
+      v-else-if="element.icon"
+      v-model="showIconsList"
+      location="center"
+      attach
+      :close-on-click="false">
       <template #activator="{ on }">
         <v-btn icon text v-on="on">
           <v-icon color="primary">{{ element.icon }}</v-icon>
@@ -58,7 +63,17 @@ export default {
 import { PropType, nextTick, ref, onMounted, defineProps } from 'vue'
 import { TextSection } from '@/common/interfaces'
 
-const iconsList = ['plus', 'minus', 'star', 'account', 'home', 'pen', 'circle']
+const iconsList = [
+  'plus',
+  'minus',
+  'star',
+  'account',
+  'home',
+  'pen',
+  'circle',
+  'palette',
+  'database'
+]
 
 const props = defineProps({
   value: {
