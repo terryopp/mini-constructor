@@ -23,9 +23,7 @@
           @mouseleave="setCanDrag(false)">
           <v-icon>mdi-drag</v-icon>
         </v-btn>
-        <TextComponent v-if="element.type === SectionType.Text" :value="element" />
-        <CardsComponent v-if="element.type === SectionType.Cards" :value="element" />
-        <FilmsComponent v-if="element.type === SectionType.Films" :value="element" />
+        <component :is="getSectionComponent(element.type)" :value="element" />
       </v-card>
     </draggable>
     <div class="selection-field__add-button secondary">
@@ -62,9 +60,9 @@ import { SectionType } from '@/common/enums'
 import { Section } from '@/common/types'
 import { createSection } from '@/common/functions'
 
-import TextComponent from '@/components/sections/Text.vue'
-import CardsComponent from '@/components/sections/Cards.vue'
-import FilmsComponent from '@/components/sections/Films.vue'
+import TextComponent from '@/components/sections/SectionText.vue'
+import CardsComponent from '@/components/sections/SectionCards.vue'
+import FilmsComponent from '@/components/sections/SectionFilms.vue'
 
 const newSectionsType = [
   { name: 'Текст', value: SectionType.Text },
@@ -114,6 +112,17 @@ onMounted(() => {
 })
 
 watch(sectionsList, value => localStorage.setItem(saveID, JSON.stringify(value)), { deep: true })
+
+const getSectionComponent = (type: SectionType) => {
+  switch (type) {
+    case SectionType.Cards:
+      return CardsComponent
+    case SectionType.Films:
+      return FilmsComponent
+    default:
+      return TextComponent
+  }
+}
 </script>
 
 <style scoped lang="sass">

@@ -1,5 +1,5 @@
 export enum SectionType {
-  Text = 'text',
-  Cards = 'cards',
-  Films = 'films'
+  Text = 'Text',
+  Cards = 'Cards',
+  Films = 'Films'
 }

@@ -48,7 +48,7 @@ import Draggable from 'vuedraggable'
 import { SectionType } from '@/common/enums'
 import { CardsSection, TextSection } from '@/common/interfaces'
 import { createSection } from '@/common/functions'
-import TextComponent from '@/components/sections/Text.vue'
+import TextComponent from '@/components/sections/SectionText.vue'
 
 const props = defineProps({
   value: {

@@ -53,7 +53,7 @@
 
 <script lang="ts">
 export default {
-  name: 'SectionsText',
+  name: 'SectionText',
   inheritAttrs: false,
   customOptions: {}
 }

@@ -26,7 +26,8 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/no-deprecated-slot-attribute': 'off',
-    'vue/no-deprecated-destroyed-lifecycle': 'off'
+    'vue/no-deprecated-destroyed-lifecycle': 'off',
+    '@typescript-eslint/no-var-requires': 'off'
   },
   overrides: [
     {
