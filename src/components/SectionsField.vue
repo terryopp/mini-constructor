@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref, onMounted } from 'vue'
+import { ref, Ref, onMounted, watch } from 'vue'
 import Draggable from 'vuedraggable'
 import { SectionType } from '@/common/enums'
 import { Section } from '@/common/types'
@@ -55,13 +55,15 @@ import TextComponent from '@/components/sections/Text.vue'
 import CardsComponent from '@/components/sections/Cards.vue'
 import FilmsComponent from '@/components/sections/Films.vue'
 
-const showNewSlots = ref(false)
-
 const newSectionsType = [
   { name: 'Текст', value: SectionType.Text },
   { name: 'Карточки', value: SectionType.Cards },
   { name: 'Фильмы', value: SectionType.Films }
 ]
+
+const saveID = 'savedProject'
+
+const showNewSlots = ref(false)
 
 const isDragging = ref(false)
 const canDrag = ref(false)
@@ -85,10 +87,17 @@ const deleteSection = (id: string) => {
 }
 
 onMounted(() => {
+  const project = localStorage.getItem(saveID)
+  if (project?.length) {
+    sectionsList.value = JSON.parse(project)
+    return
+  }
   addSection(SectionType.Text)
   addSection(SectionType.Cards)
   addSection(SectionType.Films)
 })
+
+watch(sectionsList, value => localStorage.setItem(saveID, JSON.stringify(value)), { deep: true })
 </script>
 
 <style scoped lang="sass">
