@@ -12,13 +12,21 @@
         v-for="element in sectionsList"
         :key="element.id"
         class="selection-field__container__item pa-4">
-        <v-btn icon class="delete-element" color="red lighten-1" @click="deleteSection(element.id)">
+        <v-btn
+          icon
+          class="delete-element"
+          color="red lighten-1"
+          :small="$vuetify.breakpoint.sm"
+          :x-small="$vuetify.breakpoint.xs"
+          @click="deleteSection(element.id)">
           <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
         <v-btn
           icon
           class="drag-element"
           color="grey darken-2"
+          :small="$vuetify.breakpoint.sm"
+          :x-small="$vuetify.breakpoint.xs"
           @mouseenter="setCanDrag(true)"
           @mouseleave="setCanDrag(false)">
           <v-icon>mdi-drag</v-icon>
@@ -26,19 +34,18 @@
         <component :is="getSectionComponent(element.type)" :value="element" />
       </v-card>
     </draggable>
-    <div class="selection-field__add-button secondary">
-      <v-btn
-        v-if="!showNewSlotsButtons"
-        slot="footer"
-        text
-        plain
-        large
-        color="white"
-        width="100%"
-        @click="switchShowNewSlots">
-        Добавить секцию
-      </v-btn>
-      <div v-else class="d-flex justify-center">
+    <v-btn
+      text
+      plain
+      large
+      class="selection-field__add-button secondary"
+      color="white"
+      width="100%"
+      @click="switchShowNewSlots">
+      Добавить секцию
+    </v-btn>
+    <v-bottom-sheet v-model="showNewSlotsButtons">
+      <div class="d-flex justify-center primary">
         <v-btn
           v-for="newSection in newSectionsType"
           :key="newSection.value"
@@ -49,7 +56,7 @@
           {{ newSection.name }}
         </v-btn>
       </div>
-    </div>
+    </v-bottom-sheet>
   </div>
 </template>
 

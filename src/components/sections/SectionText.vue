@@ -6,20 +6,33 @@
     <v-menu
       v-else-if="element.icon"
       v-model="showIconsList"
-      location="center"
-      attach
-      :close-on-click="false">
+      bottom
+      offset-y
+      transition="slide-y-transition"
+      attach>
       <template #activator="{ on }">
-        <v-btn icon text v-on="on">
+        <v-btn
+          icon
+          text
+          :small="$vuetify.breakpoint.smAndUp"
+          :x-small="$vuetify.breakpoint.smAndDown"
+          v-on="on">
           <v-icon color="primary">{{ element.icon }}</v-icon>
         </v-btn>
       </template>
 
-      <v-list>
-        <v-btn v-for="icon in iconsList" :key="icon" icon text @click="setIcon(icon)">
+      <div class="white py-1 d-flex flex-column">
+        <v-btn
+          v-for="icon in iconsList"
+          :key="icon"
+          :small="$vuetify.breakpoint.smAndUp"
+          :x-small="$vuetify.breakpoint.smAndDown"
+          icon
+          text
+          @click="setIcon(icon)">
           <v-icon>{{ `mdi-${icon}` }}</v-icon>
         </v-btn>
-      </v-list>
+      </div>
     </v-menu>
 
     <div class="text-left">
@@ -44,7 +57,13 @@
         dense
         hide-details />
     </div>
-    <v-btn color="secondary" @click="switchEditingMode">
+    <v-btn
+      color="secondary"
+      class="px-md-2 px-sm-1"
+      elevation="0"
+      :small="$vuetify.breakpoint.sm"
+      :x-small="$vuetify.breakpoint.xs"
+      @click="switchEditingMode">
       <span v-if="!isEditingMode">Редактировать</span>
       <span v-else class="green--text text--lighten-3">Сохранить</span>
     </v-btn>

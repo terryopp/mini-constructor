@@ -14,19 +14,22 @@
         :key="textElement.id"
         class="item pa-2"
         color="grey lighten-4"
-        outlined>
+        outlined
+        min-width="90px">
         <v-btn
           icon
           color="red lighten-2"
           class="delete-element"
-          small
+          :small="$vuetify.breakpoint.smAndUp"
+          :x-small="$vuetify.breakpoint.smAndDown"
           @click="deleteElement(textElement.id)">
           <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
         <v-btn
           icon
           class="drag-element"
-          small
+          :small="$vuetify.breakpoint.smAndUp"
+          :x-small="$vuetify.breakpoint.smAndDown"
           @mouseenter="setCanDrag(true)"
           @mouseleave="setCanDrag(false)">
           <v-icon>mdi-drag</v-icon>

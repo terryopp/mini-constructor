@@ -6,7 +6,7 @@
       <v-progress-circular v-if="!topFilms.length" indeterminate color="primary" />
       <FilmList v-else :value="topFilms" />
       <p class="title mt-5 mb-3 grey--text text--darken-3">Поиск фильмов</p>
-      <v-text-field v-model="searchInput" label="Название..." variant="solo"></v-text-field>
+      <v-text-field v-model="searchInput" label="Название..." variant="solo" />
       <v-progress-circular v-if="loading" indeterminate color="primary" />
       <FilmList v-else-if="element.films.length" :value="element.films" />
     </div>

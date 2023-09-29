@@ -1,13 +1,13 @@
 <template>
-  <div class="d-flex justify-space-between films-container">
+  <div class="d-flex justify-center flex-sm-nowrap flex-wrap films-container">
     <v-card
       v-for="film in value"
       :key="film.filmId"
-      class="film--container pa-4 ma-0"
+      class="film--container pa-2 pa-md-4 ma-0 d-flex flex-column align-center"
       color="grey lighten-4"
       outlined>
       <img class="film--preview rounded" :src="film.posterUrl" />
-      <div class="d-flex justify-space-between">
+      <div class="d-flex justify-space-between film--data">
         <div>
           <p class="text-title film--data--name">{{ film.nameRu }}</p>
           <p class="text-caption grey--text text--darken-1 film--data--name">({{ film.nameEn }})</p>
@@ -40,9 +40,13 @@ defineProps({
 .film
   &--container
     height: fit-content
+    gap: 0.5rem
   &--preview
     width: 100%
+    @media screen and (max-width: 600px)
+      max-width: 100px
   &--data
+    width: 100%
     &--name,
     &--rating
       margin: 0
